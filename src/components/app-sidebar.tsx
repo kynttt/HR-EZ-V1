@@ -46,24 +46,24 @@ const data = {
       icon: IconDashboard,
     },
     {
-      title: "Lifecycle",
+      title: "Employee",
       url: "#",
-      icon: IconListDetails,
+      icon:  IconUsers,
     },
     {
-      title: "Analytics",
+      title: "Recruitment",
       url: "#",
       icon: IconChartBar,
     },
     {
-      title: "Projects",
+      title: "Payroll",
       url: "#",
       icon: IconFolder,
     },
     {
-      title: "Team",
+      title: "Schedule",
       url: "#",
-      icon: IconUsers,
+      icon: IconListDetails,
     },
   ],
   navClouds: [
