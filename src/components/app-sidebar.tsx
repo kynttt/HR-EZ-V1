@@ -42,27 +42,27 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: IconDashboard,
     },
     {
       title: "Employee",
-      url: "#",
+      url: "/employee/manage",
       icon:  IconUsers,
     },
     {
       title: "Recruitment",
-      url: "#",
+      url: "/recruitment/jobs",
       icon: IconChartBar,
     },
     {
       title: "Payroll",
-      url: "#",
+      url: "/payroll",
       icon: IconFolder,
     },
     {
       title: "Schedule",
-      url: "#",
+      url: "/schedule",
       icon: IconListDetails,
     },
   ],

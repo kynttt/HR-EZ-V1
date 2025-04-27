@@ -9,11 +9,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ModeToggle";
+import HeroSection from "@/components/hero-section";
 
 const HomePage: FC = () => (
   <div className="p-8 space-y-8">
     <ModeToggle/>
-    <h1 className="text-3xl font-bold">Welcome to HR-EZ</h1>
+    <HeroSection/>
+    {/* <h1 className="text-3xl font-bold">Welcome to HR-EZ</h1>
     <p className="text-lg text-muted-foreground">
       Simplify hiring, onboarding, performance checks, payroll and scheduling—all in one dashboard.
     </p>
@@ -73,7 +75,7 @@ const HomePage: FC = () => (
           </Button>
         </CardContent>
       </Card>
-    </div>
+    </div> */}
   </div>
 );
 
