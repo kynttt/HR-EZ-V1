@@ -11,9 +11,8 @@ import FooterSection from "@/components/footer";
 import PricingSection from "@/components/pricing";
 import FAQSection from "@/components/faqs-4";
 const HomePage: FC = () => (
-  <div className="p-8 space-y-8">
+  <div className=" space-y-8">
     <HeroSection/>
-    <LogoCloud/>
     <FeaturesSection/>
     <ContentSection/>
     <StatsSection/>
@@ -21,6 +20,7 @@ const HomePage: FC = () => (
     <FAQSection/>
     <TestimonialsSection/>
     <CTASection/>
+    <LogoCloud/>
     <PricingSection/>
     <FooterSection/>
   </div>

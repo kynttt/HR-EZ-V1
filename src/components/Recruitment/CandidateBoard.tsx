@@ -1,10 +1,10 @@
 // src/components/Recruitment/CandidateBoard.tsx
 "use client";
 
-import React from "react";
+import React, { FC } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Avatar,
@@ -15,10 +15,19 @@ import {
   Linkedin,
   FileText,
   MessageCircle,
-  Filter as IconFilter,
+  Filter as IconFilter, Edit,
+  Users,
+  ChevronLeft,
+  Bell,
+  Share2,
 } from "lucide-react";
-import { PageTabs } from "../Shared/PageTabs";
+import { PageTabs, PageTab } from "@/components/Shared/PageTabs";
+import Link from "next/link";
 
+interface JobDetailsPanelProps {
+  jobId: string;
+  title: string;
+}
 interface Candidate {
   id: string;
   name: string;
@@ -72,16 +81,55 @@ const candidates: Candidate[] = [
   { id: "20", name: "Esther Christiansen",email: "esther-ch@gmail.com",   avatar: "/avatars/esther.jpg", status: "rejected",   files: 1, comments: 1 },
 ];
 
-export const CandidateBoard: React.FC = () => {
+export const CandidateBoard: FC<JobDetailsPanelProps> = ({
+  jobId,
+  title,
+}) => {
+  const base = `/recruitment/jobs/${encodeURIComponent(jobId)}`;
+  const tabs: PageTab[] = [
+    { href: `${base}/description`, label: "Job Description", icon: Edit },
+    //Temporarily disabled for demo purposes
+    // { href: `${base}/recruitment/candidates`,  label: "Candidates",       icon: Users },
+    { href: `/recruitment/candidates`,  label: "Candidates",       icon: Users },
+  ];
   return (
-    <div className="space-y-6 md:py-6">
-         <PageTabs
-        active="/recruitment/candidates"
-        tabs={[
-          { href: "/recruitment/jobs", label: "Job Lists" },
-          { href: "/recruitment/candidates", label: "Candidates" },
-        ]}
-      />
+    <div className="space-y-6 ">
+      {/* Top bar */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <Link
+            href="/recruitment/jobs"
+            className="flex items-center text-sm text-muted-foreground hover:text-primary"
+          >
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Back to Job List
+          </Link>
+          <h1 className="text-2xl font-semibold">{title || "Full Stack Developer"}</h1>
+        </div>
+        <div className="flex items-center space-x-3">
+          <div className="relative w-64">
+            <input
+              type="text"
+              placeholder="Search keyword…"
+              className="w-full rounded-lg border bg-muted py-2 pl-3 pr-10 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+            <span className="absolute inset-y-0 right-0 flex items-center pr-3">
+              <kbd className="rounded bg-muted px-1 text-xs">⌘+K</kbd>
+            </span>
+          </div>
+          <Button variant="ghost" size="icon">
+            <Bell className="h-5 w-5" />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <Share2 className="h-5 w-5" />
+          </Button>
+        </div>
+      </div>
+         {/* Page Tabs */}
+      <PageTabs 
+      // active={`${base}/description`} 
+      active={`/recruitment/candidates`}
+      tabs={tabs} />
       {/* Top Bar */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Candidates</h1>

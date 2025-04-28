@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Calendar, Bell, Share2, ChevronDown, Plus } from "lucide-react";
+import { AppointmentDetailsSheet } from "@/components/Schedule/AppointmentDetailsSheet";
 import { cn } from "@/lib/utils";
 
 interface Task {
@@ -89,11 +90,13 @@ const ScheduleHeader = () => (
   <div className="space-y-4">
     {/* top row: search + icons */}
     <div className="flex items-center justify-between">
-      <Input
-        placeholder="Search keyword…"
-        className="max-w-lg"
-        icon={<Calendar className="h-5 w-5 text-muted-foreground" />}
-      />
+      <div className="relative max-w-lg">
+        <Input
+          placeholder="Search keyword…"
+          className="pl-10"
+        />
+        <Calendar className="absolute left-3 top-1/2 h-5 w-5 text-muted-foreground transform -translate-y-1/2" />
+      </div>
       <div className="flex items-center space-x-2">
         <Button variant="ghost" size="icon">
           <Bell className="h-5 w-5" />
@@ -119,9 +122,11 @@ const ScheduleHeader = () => (
 
       {/* export + add */}
       <div className="flex space-x-2">
-        <Button variant="outline">
-          <Plus className="mr-2 h-4 w-4" /> Add Task
-        </Button>
+      <AppointmentDetailsSheet>
+  <Button variant="outline">
+    <Plus className="mr-2 h-4 w-4" /> Add Task
+  </Button>
+</AppointmentDetailsSheet>
         <Button variant="ghost">
           <ChevronDown className="h-4 w-4" /> Export
         </Button>

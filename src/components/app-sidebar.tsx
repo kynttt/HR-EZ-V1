@@ -13,6 +13,7 @@ import {
   IconHelp,
   IconInnerShadowTop,
   IconListDetails,
+  IconMail,
   IconReport,
   IconSearch,
   IconSettings,
@@ -44,6 +45,11 @@ const data = {
       title: "Dashboard",
       url: "/dashboard",
       icon: IconDashboard,
+    },
+    {
+      title: "Inbox",
+      url: "/inbox",
+      icon: IconMail,
     },
     {
       title: "Employee",

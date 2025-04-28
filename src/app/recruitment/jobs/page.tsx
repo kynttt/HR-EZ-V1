@@ -76,13 +76,7 @@ const JobsListPage: FC = () => (
     <div className="@container/main flex flex-1 flex-col gap-2">
       <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
       <div className="p-8 space-y-6">
-      <PageTabs
-        active="/recruitment/jobs"
-        tabs={[
-          { href: "/recruitment/jobs", label: "Job Lists" },
-          { href: "/recruitment/candidates", label: "Candidates" },
-        ]}
-      />
+      
     {/* Header */}
     <div className="flex items-center justify-between">
       <div>
@@ -95,16 +89,10 @@ const JobsListPage: FC = () => (
         <Button variant="outline">
           Active Jobs <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
-        <Button asChild>
-                   <Link
-                     href={`/recruitment/jobs/${encodeURIComponent(
-                       jobs[0].title
-                         .toLowerCase()
-                         .replace(/\s+/g, "-")
-                     )}/description`}
-                   >
+        <Button >
+                  
                      + Create New Job
-                   </Link>
+                  
                 </Button>
       </div>
     </div>
