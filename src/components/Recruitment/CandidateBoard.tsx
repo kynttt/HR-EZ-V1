@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { PageTabs, PageTab } from "@/components/Shared/PageTabs";
 import Link from "next/link";
+import { IconRobot } from "@tabler/icons-react";
 
 interface JobDetailsPanelProps {
   jobId: string;
@@ -91,6 +92,7 @@ export const CandidateBoard: FC<JobDetailsPanelProps> = ({
     //Temporarily disabled for demo purposes
     // { href: `${base}/recruitment/candidates`,  label: "Candidates",       icon: Users },
     { href: `/recruitment/candidates`,  label: "Candidates",       icon: Users },
+    { href: `/recruitment/ai-review`,  label: "AI Assessment",       icon: IconRobot },
   ];
   return (
     <div className="space-y-6 ">
