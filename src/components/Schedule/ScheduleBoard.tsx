@@ -1,15 +1,28 @@
 // src/components/Schedule/ScheduleBoard.tsx
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Calendar, Bell, Share2, ChevronDown, Plus } from "lucide-react";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import {
+  Calendar as CalendarIcon,
+  Bell,
+  Share2,
+  ChevronDown,
+  Plus,
+} from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
 import { AppointmentDetailsSheet } from "@/components/Schedule/AppointmentDetailsSheet";
 import { cn } from "@/lib/utils";
+import { AddTaskModal } from "./AddTaskModal";
 
-interface Task {
+export interface Task {
   id: string;
   title: string;
   startHour: number;        // e.g. 8.0 for 8:00, 8.5 for 8:30
@@ -20,7 +33,8 @@ interface Task {
   timeLabel: string;        // "08:00 - 10:00"
 }
 
-const tasks: Task[] = [
+// rename this so it doesn't conflict with state
+const initialTasks: Task[] = [
   {
     id: "1",
     title: "Online Interview with UI Candidate",
@@ -74,28 +88,43 @@ const tasks: Task[] = [
 ];
 
 export const ScheduleBoard: React.FC = () => {
-  // hours from 7 to 14
-  const hours = Array.from({ length: 8 }, (_, i) => 7 + i);
+  // full 0–23 hour labels
+  const hours = Array.from({ length: 24 }, (_, i) => i);
+  const [viewDate, setViewDate] = useState<Date>(new Date());
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   return (
-    <div className="space-y-6 p-6">
-      <ScheduleHeader />
-      <ScheduleGrid hours={hours} tasks={tasks} />
+    <div className="flex h-screen flex-col space-y-6 p-6">
+      <ScheduleHeader
+        viewDate={viewDate}
+        onDateChange={setViewDate}
+        onAddTask={(task) => setTasks((t) => [...t, task])}
+      />
+
+      <div className="flex-1 overflow-y-auto">
+        <ScheduleGrid hours={hours} tasks={tasks} />
+      </div>
     </div>
   );
 };
 
-/** 1. Header with search, notifications, title, date, buttons & toggle */
-const ScheduleHeader = () => (
+type ScheduleHeaderProps = {
+  viewDate: Date;
+  onDateChange: (date: Date) => void;
+  onAddTask: (task: Task) => void;
+};
+
+const ScheduleHeader: React.FC<ScheduleHeaderProps> = ({
+  viewDate,
+  onDateChange,
+  onAddTask,
+}) => (
   <div className="space-y-4">
-    {/* top row: search + icons */}
+    {/* top row */}
     <div className="flex items-center justify-between">
       <div className="relative max-w-lg">
-        <Input
-          placeholder="Search keyword…"
-          className="pl-10"
-        />
-        <Calendar className="absolute left-3 top-1/2 h-5 w-5 text-muted-foreground transform -translate-y-1/2" />
+        <Input placeholder="Search keyword…" className="pl-10" />
+        <CalendarIcon className="absolute left-3 top-1/2 h-5 w-5 text-muted-foreground -translate-y-1/2" />
       </div>
       <div className="flex items-center space-x-2">
         <Button variant="ghost" size="icon">
@@ -107,71 +136,80 @@ const ScheduleHeader = () => (
       </div>
     </div>
 
-    {/* second row: title + date picker + export/add */}
+    {/* second row */}
     <div className="flex items-center justify-between">
-      {/* title & subtitle */}
       <div>
-        <h1 className="text-2xl font-semibold flex items-center space-x-2">
+        <h1 className="flex items-center space-x-2 text-2xl font-semibold">
           <Plus className="h-6 w-6 text-primary" />
           <span>Schedule</span>
         </h1>
-        <p className="text-sm text-muted-foreground">
-          Manage your schedule
-        </p>
+        <p className="text-sm text-muted-foreground">Manage your schedule</p>
       </div>
-
-      {/* export + add */}
       <div className="flex space-x-2">
-      <AppointmentDetailsSheet>
-  <Button variant="outline">
-    <Plus className="mr-2 h-4 w-4" /> Add Task
-  </Button>
-</AppointmentDetailsSheet>
+        <AddTaskModal onAdd={onAddTask} />
+
         <Button variant="ghost">
           <ChevronDown className="h-4 w-4" /> Export
         </Button>
       </div>
     </div>
 
-    {/* third row: date picker + view toggle */}
+    {/* third row */}
     <div className="flex items-center justify-between">
-      <Button variant="link" className="text-lg font-medium">
-        Jan 28, 2024 <ChevronDown className="inline-block h-4 w-4 ml-1" />
-      </Button>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant="link" className="text-lg font-medium">
+            {viewDate.toLocaleDateString(undefined, {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
+            <ChevronDown className="inline-block h-4 w-4 ml-1" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0 w-auto">
+          <Calendar
+            mode="single"
+            selected={viewDate}
+            onSelect={(d) => d && onDateChange(d)}
+            initialFocus
+          />
+        </PopoverContent>
+      </Popover>
+
       <ToggleGroup type="single" defaultValue="today" className="space-x-2">
         <ToggleGroupItem value="today">Today</ToggleGroupItem>
         <ToggleGroupItem value="week">Week</ToggleGroupItem>
         <ToggleGroupItem value="month">Month</ToggleGroupItem>
       </ToggleGroup>
     </div>
+    <hr className="border-gray-200" />
   </div>
 );
 
-/** 2. Grid of hours + absolutely positioned task bars */
 interface ScheduleGridProps {
   hours: number[];
   tasks: Task[];
 }
 
 const ScheduleGrid: React.FC<ScheduleGridProps> = ({ hours, tasks }) => {
-  // each hour row height
-  const rowHeight = 64; // px
+  const rowHeight = 64; // px per hour
 
   return (
     <div className="relative flex">
-      {/* Left column: time labels */}
+      {/* time labels */}
       <div className="flex flex-col text-right text-sm text-muted-foreground">
         {hours.map((h) => (
           <div
             key={h}
-            style={{ height: `${rowHeight}px`, lineHeight: `${rowHeight}px` }}
+            style={{ height: rowHeight, lineHeight: `${rowHeight}px` }}
           >
             {h.toString().padStart(2, "0")}.00
           </div>
         ))}
       </div>
 
-      {/* Right column: schedule area */}
+      {/* schedule area */}
       <div className="relative flex-1 border-l border-gray-200">
         {/* striped background */}
         <div
@@ -179,43 +217,68 @@ const ScheduleGrid: React.FC<ScheduleGridProps> = ({ hours, tasks }) => {
           style={{ backgroundSize: "24px 24px" }}
         />
 
-        {/* current time line at 09:35 (9.5833) */}
+        {/* current time line (example at 09:35) */}
         <div
           className="absolute left-0 right-0 h-px bg-blue-600"
-          style={{ top: `${(9.5833 - hours[0]) * rowHeight}px` }}
+          style={{ top: (9.5833 - hours[0]) * rowHeight }}
         />
 
-        {/* grid rows for reference */}
-        <div>
-          {hours.map((_, idx) => (
-            <div
-              key={idx}
-              className="border-b border-gray-100"
-              style={{ height: `${rowHeight}px` }}
-            />
-          ))}
-        </div>
+        {/* horizontal grid */}
+        {hours.map((_, i) => (
+          <div
+            key={i}
+            className="border-b border-gray-100"
+            style={{ height: rowHeight }}
+          />
+        ))}
 
-        {/* task bars */}
+        {/* task bars, laid out side-by-side when they overlap */}
         {tasks.map((t) => {
+          // find all tasks that overlap in time with this one
+          const overlapGroup = tasks
+            .filter(
+              (u) =>
+                u.startHour < t.endHour && // starts before this one ends
+                u.endHour > t.startHour    // ends after this one starts
+            )
+            // sort by start time so we get a deterministic column index
+            .sort((a, b) => a.startHour - b.startHour);
+
+          const groupSize = overlapGroup.length;
+          const colIndex = overlapGroup.findIndex((u) => u.id === t.id);
+
+          // compute CSS calc() strings for left & right
+          const left = `calc(16px + ${colIndex} * ((100% - 32px) / ${groupSize}))`;
+          const right = `calc(16px + ${groupSize - 1 - colIndex
+            } * ((100% - 32px) / ${groupSize}))`;
+
           const top = (t.startHour - hours[0]) * rowHeight;
           const height = (t.endHour - t.startHour) * rowHeight;
+
           return (
-            <div
-              key={t.id}
-              className={cn(
-                "absolute left-2 right-4 rounded-lg border-l-4 p-3 text-sm",
-                t.colorClass,
-                t.borderColorClass
-              )}
-              style={{ top: `${top}px`, height: `${height}px` }}
-            >
-              <div className="font-medium">{t.title}</div>
-              <div className="mt-auto flex justify-between text-xs text-muted-foreground">
-                <span>{t.timeLabel}</span>
-                <span>{t.label}</span>
+            <AppointmentDetailsSheet key={t.id} task={t}>
+              <div
+                role="button"
+                tabIndex={0}
+                className={cn(
+                  "absolute rounded-lg p-3 m-2 text-sm cursor-pointer hover:shadow-lg transition-shadow",
+                  t.colorClass,
+                  t.borderColorClass
+                )}
+                style={{
+                  top: `${top}px`,
+                  height: `${height}px`,
+                  left,
+                  right,
+                }}
+              >
+                <div className="font-medium">{t.title}</div>
+                <div className="mt-auto flex justify-between text-xs text-muted-foreground">
+                  <span>{t.timeLabel}</span>
+                  <span>{t.label}</span>
+                </div>
               </div>
-            </div>
+            </AppointmentDetailsSheet>
           );
         })}
       </div>

@@ -56,30 +56,30 @@ const columns: {
 
 const candidates: Candidate[] = [
   // Sourced
-  { id: "1", name: "Sonia Hoppe",       email: "hao-sonia92@gmail.com",   avatar: "/avatars/sonia.jpg",  status: "sourced",    files: 4, comments: 1 },
-  { id: "2", name: "Melissa Bartoletti",email: "mel.barto@gmail.com",     avatar: "/avatars/melissa.jpg",status: "sourced",    files: 4, comments: 2 },
-  { id: "3", name: "Gina Steuber",      email: "gina-stu32@gmail.com",    avatar: "/avatars/gina.jpg",   status: "sourced",    files: 4, comments: 2 },
-  { id: "4", name: "Caroline Stracke",  email: "carolines@yahoo.com",     avatar: "/avatars/caroline.jpg",status: "sourced",    files: 4, comments: 3 },
-  { id: "5", name: "Dana Macejkovic",   email: "dana-mac@yahoo.com",      avatar: "/avatars/dana.jpg",    status: "sourced",    files: 4, comments: 3 },
-  { id: "6", name: "Pearl Durgan",      email: "pearl88du@hotmail.com",    avatar: "/avatars/pearl.jpg",   status: "sourced",    files: 4, comments: 2 },
+  { id: "1", name: "Sonia Hoppe",       email: "hao-sonia92@gmail.com",   avatar: "https://avatar.iran.liara.run/public/boy",  status: "sourced",    files: 4, comments: 1 },
+  { id: "2", name: "Melissa Bartoletti",email: "mel.barto@gmail.com",     avatar: "https://avatar.iran.liara.run/public/boy",status: "sourced",    files: 4, comments: 2 },
+  { id: "3", name: "Gina Steuber",      email: "gina-stu32@gmail.com",    avatar: "https://avatar.iran.liara.run/public/girl",   status: "sourced",    files: 4, comments: 2 },
+  { id: "4", name: "Caroline Stracke",  email: "carolines@yahoo.com",     avatar: "https://avatar.iran.liara.run/public/boy?usearname=[value]",status: "sourced",    files: 4, comments: 3 },
+  { id: "5", name: "Dana Macejkovic",   email: "dana-mac@yahoo.com",      avatar: "https://avatar.iran.liara.run/public/boy",    status: "sourced",    files: 4, comments: 3 },
+  { id: "6", name: "Pearl Durgan",      email: "pearl88du@hotmail.com",    avatar: "https://avatar.iran.liara.run/public/boy",   status: "sourced",    files: 4, comments: 2 },
   // In Progress
-  { id: "7", name: "Wilbur Hackett",    email: "wilbur-hack@yahoo.com",   avatar: "/avatars/wilbur.jpg",  status: "inProgress", files: 2, comments: 1 },
-  { id: "8", name: "Keith Hirthe",      email: "keith-hirthe@yahoo.com",  avatar: "/avatars/keith.jpg",   status: "inProgress", files: 3, comments: 1 },
-  { id: "9", name: "Lisa Harvey",       email: "helo-lisaa@hotmail.com",  avatar: "/avatars/lisa.jpg",    status: "inProgress", files: 4, comments: 1 },
+  { id: "7", name: "Wilbur Hackett",    email: "wilbur-hack@yahoo.com",   avatar: "https://avatar.iran.liara.run/public/boy?usearname=[value]",  status: "inProgress", files: 2, comments: 1 },
+  { id: "8", name: "Keith Hirthe",      email: "keith-hirthe@yahoo.com",  avatar: "https://avatar.iran.liara.run/public/girl",   status: "inProgress", files: 3, comments: 1 },
+  { id: "9", name: "Lisa Harvey",       email: "helo-lisaa@hotmail.com",  avatar: "https://avatar.iran.liara.run/public/girl",    status: "inProgress", files: 4, comments: 1 },
   // Interview
-  { id: "10", name: "Annette Dickinson",email: "anet-son@hotmail.com",     avatar: "/avatars/annette.jpg",status: "interview",  files: 4, comments: 2 },
-  { id: "11", name: "Angela Von",       email: "angela93@gmail.com",      avatar: "/avatars/angela.jpg",  status: "interview",  files: 4, comments: 2 },
+  { id: "10", name: "Annette Dickinson",email: "anet-son@hotmail.com",     avatar: "https://avatar.iran.liara.run/public/boy",status: "interview",  files: 4, comments: 2 },
+  { id: "11", name: "Angela Von",       email: "angela93@gmail.com",      avatar: "https://avatar.iran.liara.run/public/[ID]",  status: "interview",  files: 4, comments: 2 },
   // Hired
-  { id: "12", name: "Loretta Leuschke", email: "lor-luess@gmail.com",     avatar: "/avatars/loretta.jpg",status: "hired",      files: 5, comments: 4 },
-  { id: "13", name: "Kent McCullough",  email: "kentmc@hotmail.com",      avatar: "/avatars/kent.jpg",    status: "hired",      files: 2, comments: 1 },
-  { id: "14", name: "Esther Christiansen",email: "esther-ch@gmail.com",   avatar: "/avatars/esther.jpg", status: "hired",      files: 1, comments: 1 },
-  { id: "15", name: "Julian McDermott", email: "mcDermott@yahoo.com",      avatar: "/avatars/julian.jpg",  status: "hired",      files: 1, comments: 1 },
-  { id: "16", name: "Woodrow Veum",     email: "woo-veum@yahoo.com",      avatar: "/avatars/woodrow.jpg", status: "hired",      files: 2, comments: 1 },
-  { id: "17", name: "Melinda Barton",   email: "mel-bart12@hotmail.com",  avatar: "/avatars/melinda.jpg",status: "hired",      files: 1, comments: 2 },
+  { id: "12", name: "Loretta Leuschke", email: "lor-luess@gmail.com",     avatar: "https://avatar.iran.liara.run/public/[ID]",status: "hired",      files: 5, comments: 4 },
+  { id: "13", name: "Kent McCullough",  email: "kentmc@hotmail.com",      avatar: "https://avatar.iran.liara.run/public/girl",    status: "hired",      files: 2, comments: 1 },
+  { id: "14", name: "Esther Christiansen",email: "esther-ch@gmail.com",   avatar: "https://avatar.iran.liara.run/public/boy", status: "hired",      files: 1, comments: 1 },
+  { id: "15", name: "Julian McDermott", email: "mcDermott@yahoo.com",      avatar: "https://avatar.iran.liara.run/public/boy?usearname=[value]",  status: "hired",      files: 1, comments: 1 },
+  { id: "16", name: "Woodrow Veum",     email: "woo-veum@yahoo.com",      avatar: "https://avatar.iran.liara.run/public/girl", status: "hired",      files: 2, comments: 1 },
+  { id: "17", name: "Melinda Barton",   email: "mel-bart12@hotmail.com",  avatar: "https://avatar.iran.liara.run/public/boy",status: "hired",      files: 1, comments: 2 },
   // Rejected
-  { id: "18", name: "Eunice Bergstrom", email: "eunice-83@hotmail.com",   avatar: "/avatars/eunice.jpg", status: "rejected",   files: 2, comments: 1 },
-  { id: "19", name: "Kent McCullough",  email: "kentmc@hotmail.com",      avatar: "/avatars/kent.jpg",    status: "rejected",   files: 2, comments: 1 },
-  { id: "20", name: "Esther Christiansen",email: "esther-ch@gmail.com",   avatar: "/avatars/esther.jpg", status: "rejected",   files: 1, comments: 1 },
+  { id: "18", name: "Eunice Bergstrom", email: "eunice-83@hotmail.com",   avatar: "https://avatar.iran.liara.run/public/[ID]", status: "rejected",   files: 2, comments: 1 },
+  { id: "19", name: "Kent McCullough",  email: "kentmc@hotmail.com",      avatar: "https://avatar.iran.liara.run/public/boy",    status: "rejected",   files: 2, comments: 1 },
+  { id: "20", name: "Esther Christiansen",email: "esther-ch@gmail.com",   avatar: "https://avatar.iran.liara.run/public/boy", status: "rejected",   files: 1, comments: 1 },
 ];
 
 export const CandidateBoard: FC<JobDetailsPanelProps> = ({

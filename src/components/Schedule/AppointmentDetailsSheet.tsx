@@ -25,6 +25,7 @@ import {
 export interface AppointmentDetailsSheetProps {
   /** The trigger element, e.g. your “Add Task” button */
   children: React.ReactNode;
+  task: Task; 
 }
 
 export function AppointmentDetailsSheet({

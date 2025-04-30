@@ -45,7 +45,7 @@ const applicants: InterviewApplicant[] = [
   {
     id: "a1",
     name: "Sonia Hoppe",
-    avatar: "/avatars/sonia.jpg",
+    avatar: "https://avatar.iran.liara.run/public/[ID]",
     email: "sonia.hoppe@example.com",
     age: 29,
     gender: "F",
@@ -57,7 +57,7 @@ const applicants: InterviewApplicant[] = [
   {
     id: "a2",
     name: "Melissa Bartoletti",
-    avatar: "/avatars/melissa.jpg",
+    avatar: "https://avatar.iran.liara.run/public/girl",
     email: "melissa.b@example.com",
     age: 31,
     gender: "F",
@@ -69,7 +69,7 @@ const applicants: InterviewApplicant[] = [
   {
     id: "a3",
     name: "Gina Steuber",
-    avatar: "/avatars/gina.jpg",
+    avatar: "https://avatar.iran.liara.run/public/boy",
     email: "gina.s@example.com",
     age: 27,
     gender: "F",

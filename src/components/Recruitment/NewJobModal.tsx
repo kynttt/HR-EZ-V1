@@ -61,7 +61,7 @@ export function NewJobModal() {
       </DialogTrigger>
 
       {/* now an extra-wide dialog */}
-      <DialogContent className="w-full max-w-screen-xl">
+      <DialogContent className="w-full md:w-1/2">
         <DialogHeader>
           <DialogTitle>Add New Job</DialogTitle>
           <DialogDescription>
