@@ -6,8 +6,7 @@ import { ChevronDown } from "lucide-react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
-import Link from "next/link";
-import { PageTabs } from "@/components/Shared/PageTabs";
+import { NewJobModal } from "@/components/Recruitment/NewJobModal";
 
 const jobs: JobCardProps[] = [
   {
@@ -89,11 +88,7 @@ const JobsListPage: FC = () => (
         <Button variant="outline">
           Active Jobs <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
-        <Button >
-                  
-                     + Create New Job
-                  
-                </Button>
+        <NewJobModal />
       </div>
     </div>
 

@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { PageTabs, PageTab } from "@/components/Shared/PageTabs";
-import { IconRobot } from "@tabler/icons-react";
+import { IconRobot, IconVideo } from "@tabler/icons-react";
 
 interface JobDetailsPanelProps {
   jobId: string;
@@ -26,6 +26,7 @@ export const JobDetailsPanel: FC<JobDetailsPanelProps> = ({
     // { href: `${base}/recruitment/candidates`,  label: "Candidates",       icon: Users },
     { href: `/recruitment/candidates`,  label: "Candidates",       icon: Users },
     { href: `/recruitment/ai-review`,  label: "AI Assessment",       icon: IconRobot },
+    { href: `/recruitment/recordings`,  label: "AI Recordings",       icon: IconVideo },
   ];
 
   return (

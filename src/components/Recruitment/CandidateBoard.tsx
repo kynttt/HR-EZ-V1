@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { PageTabs, PageTab } from "@/components/Shared/PageTabs";
 import Link from "next/link";
-import { IconRobot } from "@tabler/icons-react";
+import { IconRobot, IconVideo } from "@tabler/icons-react";
 
 interface JobDetailsPanelProps {
   jobId: string;
@@ -50,8 +50,8 @@ const columns: {
   { key: "sourced",    label: "SOURCED",     count: 20, color: "bg-yellow-100 text-yellow-800" },
   { key: "inProgress", label: "IN PROGRESS", count: 20, color: "bg-blue-100 text-blue-800" },
   { key: "interview",  label: "INTERVIEW",   count: 20, color: "bg-purple-100 text-purple-800" },
-  { key: "hired",      label: "HIRED",       count: 20, color: "bg-green-100 text-green-800" },
   { key: "rejected",   label: "REJECTED",    count: 20, color: "bg-red-100 text-red-800" },
+  { key: "hired",      label: "HIRED",       count: 20, color: "bg-green-100 text-green-800" },
 ];
 
 const candidates: Candidate[] = [
@@ -93,6 +93,7 @@ export const CandidateBoard: FC<JobDetailsPanelProps> = ({
     // { href: `${base}/recruitment/candidates`,  label: "Candidates",       icon: Users },
     { href: `/recruitment/candidates`,  label: "Candidates",       icon: Users },
     { href: `/recruitment/ai-review`,  label: "AI Assessment",       icon: IconRobot },
+    { href: `/recruitment/recordings`,  label: "AI Recordings",       icon: IconVideo },
   ];
   return (
     <div className="space-y-6 ">
@@ -148,7 +149,7 @@ export const CandidateBoard: FC<JobDetailsPanelProps> = ({
       <div className="grid grid-cols-5 gap-6 overflow-x-auto pb-4">
         {columns.map(({ key, label, count, color }) => (
           <div key={key} className="flex flex-col">
-            <div className={`inline-flex items-center justify-between space-x-2 rounded-full px-3 py-1 ${color} text-xs font-medium`}>
+            <div className={`inline-flex items-center justify-between space-x-2 rounded-md px-3 py-1 ${color} text-xs font-medium`}>
               <span>{label}</span>
               <span className="bg-white text-sm font-semibold px-2 py-0.5 rounded-full">{count}</span>
             </div>
@@ -157,7 +158,14 @@ export const CandidateBoard: FC<JobDetailsPanelProps> = ({
               {candidates
                 .filter((c) => c.status === key)
                 .map((c) => (
-                  <Card key={c.id} className="w-full py-4">
+                  <Card
+                  key={c.id}
+                  className={`w-full py-4 transition-shadow hover:shadow-lg ${
+                    c.status === "hired"
+                      ? "border-2 border-green-500"
+                      : "border"
+                  }`}
+                >
                     <CardContent className="flex flex-col space-y-3">
                       <div className="flex items-center space-x-3 border-b pb-4">
                         <Avatar className="h-10 w-10">

@@ -58,7 +58,7 @@ export const TopApplicantsTable: FC<TopApplicantsTableProps> = ({
               ))}
             </TableCell>
             <TableCell className="text-right">
-              <Button size="sm" variant="link">View</Button>
+              <Button size="sm" variant="link">Send Interview Link</Button>
             </TableCell>
           </TableRow>
         ))}

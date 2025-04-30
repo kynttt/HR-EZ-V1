@@ -11,7 +11,7 @@ import {
 import { PageTab, PageTabs } from "../Shared/PageTabs";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { IconFilter, IconRobot } from "@tabler/icons-react";
+import { IconFilter, IconRobot, IconVideo } from "@tabler/icons-react";
 import { Bell, ChevronLeft, Edit, Share2, Users } from "lucide-react";
 import Link from "next/link";
 
@@ -84,6 +84,7 @@ export default function AIReviewPage() {
     // { href: `${base}/recruitment/candidates`,  label: "Candidates",       icon: Users },
     { href: `/recruitment/candidates`,  label: "Candidates",       icon: Users },
     { href: `/recruitment/ai-review`,  label: "AI Assessment",       icon: IconRobot },
+    { href: `/recruitment/recordings`,  label: "AI Recordings",       icon: IconVideo },
   ];
   return (
     
