@@ -33,6 +33,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { SettingsDrawer } from "@/components/Settings/SettingsModal"
 
 const data = {
   user: {
@@ -177,7 +178,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavSecondary
+          items={data.navSecondary.filter((i) => i.title !== "Settings")}
+          className="mt-auto"
+        />
+
+        {/* now overlay our SettingsModal trigger */}
+      
+          <SettingsDrawer>
+            
+              <SidebarMenuButton asChild>
+                <button className="w-full flex items-center space-x-2 px-4 py-2 hover:bg-muted/50 rounded-md">
+                  <IconSettings className="w-5 h-5 m-0" />
+                  <span>Settings</span>
+                </button>
+              </SidebarMenuButton>
+            
+          </SettingsDrawer>
+      
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
