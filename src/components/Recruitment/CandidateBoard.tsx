@@ -39,7 +39,7 @@ interface Candidate {
   comments: number;
 }
 
-type StatusKey = "sourced" | "inProgress" | "interview" | "hired" | "rejected";
+type StatusKey = "requirements" | "inProgress" | "interview" | "hired" | "rejected";
 
 const columns: {
   key: StatusKey;
@@ -47,21 +47,22 @@ const columns: {
   count: number;
   color: string;
 }[] = [
-  { key: "sourced",    label: "SOURCED",     count: 20, color: "bg-yellow-100 text-yellow-800" },
+  
   { key: "inProgress", label: "IN PROGRESS", count: 20, color: "bg-blue-100 text-blue-800" },
   { key: "interview",  label: "INTERVIEW",   count: 20, color: "bg-purple-100 text-purple-800" },
+  { key: "requirements",    label: "REQUIREMENTS SUBMISSION",     count: 20, color: "bg-yellow-100 text-yellow-800" },
   { key: "rejected",   label: "REJECTED",    count: 20, color: "bg-red-100 text-red-800" },
   { key: "hired",      label: "HIRED",       count: 20, color: "bg-green-100 text-green-800" },
 ];
 
 const candidates: Candidate[] = [
-  // Sourced
-  { id: "1", name: "Sonia Hoppe",       email: "hao-sonia92@gmail.com",   avatar: "https://avatar.iran.liara.run/public/boy",  status: "sourced",    files: 4, comments: 1 },
-  { id: "2", name: "Melissa Bartoletti",email: "mel.barto@gmail.com",     avatar: "https://avatar.iran.liara.run/public/boy",status: "sourced",    files: 4, comments: 2 },
-  { id: "3", name: "Gina Steuber",      email: "gina-stu32@gmail.com",    avatar: "https://avatar.iran.liara.run/public/girl",   status: "sourced",    files: 4, comments: 2 },
-  { id: "4", name: "Caroline Stracke",  email: "carolines@yahoo.com",     avatar: "https://avatar.iran.liara.run/public/boy?usearname=[value]",status: "sourced",    files: 4, comments: 3 },
-  { id: "5", name: "Dana Macejkovic",   email: "dana-mac@yahoo.com",      avatar: "https://avatar.iran.liara.run/public/boy",    status: "sourced",    files: 4, comments: 3 },
-  { id: "6", name: "Pearl Durgan",      email: "pearl88du@hotmail.com",    avatar: "https://avatar.iran.liara.run/public/boy",   status: "sourced",    files: 4, comments: 2 },
+  // requirements
+  { id: "1", name: "Sonia Hoppe",       email: "hao-sonia92@gmail.com",   avatar: "https://avatar.iran.liara.run/public/boy",  status: "requirements",    files: 4, comments: 1 },
+  { id: "2", name: "Melissa Bartoletti",email: "mel.barto@gmail.com",     avatar: "https://avatar.iran.liara.run/public/boy",status: "requirements",    files: 4, comments: 2 },
+  { id: "3", name: "Gina Steuber",      email: "gina-stu32@gmail.com",    avatar: "https://avatar.iran.liara.run/public/girl",   status: "requirements",    files: 4, comments: 2 },
+  { id: "4", name: "Caroline Stracke",  email: "carolines@yahoo.com",     avatar: "https://avatar.iran.liara.run/public/boy?usearname=[value]",status: "requirements",    files: 4, comments: 3 },
+  { id: "5", name: "Dana Macejkovic",   email: "dana-mac@yahoo.com",      avatar: "https://avatar.iran.liara.run/public/boy",    status: "requirements",    files: 4, comments: 3 },
+  { id: "6", name: "Pearl Durgan",      email: "pearl88du@hotmail.com",    avatar: "https://avatar.iran.liara.run/public/boy",   status: "requirements",    files: 4, comments: 2 },
   // In Progress
   { id: "7", name: "Wilbur Hackett",    email: "wilbur-hack@yahoo.com",   avatar: "https://avatar.iran.liara.run/public/boy?usearname=[value]",  status: "inProgress", files: 2, comments: 1 },
   { id: "8", name: "Keith Hirthe",      email: "keith-hirthe@yahoo.com",  avatar: "https://avatar.iran.liara.run/public/girl",   status: "inProgress", files: 3, comments: 1 },
