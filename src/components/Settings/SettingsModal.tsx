@@ -79,7 +79,7 @@ export function SettingsDrawer({ children }: SettingsDrawerProps) {
         {children}
       </DrawerTrigger>
 
-      <DrawerContent side="right" className="w-full max-w-md">
+      <DrawerContent className="w-full md:w-1/2 ">
         <DrawerHeader>
           <DrawerTitle>Settings</DrawerTitle>
         </DrawerHeader>

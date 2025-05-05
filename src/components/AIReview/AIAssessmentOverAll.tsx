@@ -11,7 +11,7 @@ import {
 import { PageTab, PageTabs } from "../Shared/PageTabs";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { IconFilter, IconRobot, IconVideo } from "@tabler/icons-react";
+import { IconEyeQuestion, IconFilter, IconMessageCircleQuestion, IconRobot, IconVideo } from "@tabler/icons-react";
 import { Bell, ChevronLeft, Edit, Share2, Users } from "lucide-react";
 import Link from "next/link";
 
@@ -78,14 +78,17 @@ export default function AIReviewPage() {
   };
   const jobId = "default-job-id"; // Replace with actual job ID logic
   const base = `/recruitment/jobs/${encodeURIComponent(jobId)}`;
-  const tabs: PageTab[] = [
-    { href: `${base}/description`, label: "Job Description", icon: Edit },
-    //Temporarily disabled for demo purposes
+ 
+    
+    const tabs: PageTab[] = [
+        { href: `${base}/description`, label: "Job Description", icon: Edit },
+        { href: `/recruitment/questionnaire`, label: "AI Questionnaires", icon: IconMessageCircleQuestion },
+        { href: `/recruitment/ai-review`, label: "AI Assessment", icon: IconRobot },
+        { href: `/recruitment/recordings`, label: "AI Recordings", icon: IconVideo },
+        //Temporarily disabled for demo purposes
     // { href: `${base}/recruitment/candidates`,  label: "Candidates",       icon: Users },
-    { href: `/recruitment/candidates`,  label: "Candidates",       icon: Users },
-    { href: `/recruitment/ai-review`,  label: "AI Assessment",       icon: IconRobot },
-    { href: `/recruitment/recordings`,  label: "AI Recordings",       icon: IconVideo },
-  ];
+        { href: `/recruitment/candidates`, label: "Candidates", icon: Users },
+      ];
   return (
     
 

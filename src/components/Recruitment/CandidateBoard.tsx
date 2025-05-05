@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { PageTabs, PageTab } from "@/components/Shared/PageTabs";
 import Link from "next/link";
-import { IconRobot, IconVideo } from "@tabler/icons-react";
+import { IconMessageCircleQuestion, IconRobot, IconVideo } from "@tabler/icons-react";
 
 interface JobDetailsPanelProps {
   jobId: string;
@@ -89,11 +89,12 @@ export const CandidateBoard: FC<JobDetailsPanelProps> = ({
   const base = `/recruitment/jobs/${encodeURIComponent(jobId)}`;
   const tabs: PageTab[] = [
     { href: `${base}/description`, label: "Job Description", icon: Edit },
+    { href: `/recruitment/questionnaire`, label: "AI Questionnaires", icon: IconMessageCircleQuestion },
+    { href: `/recruitment/ai-review`, label: "AI Assessment", icon: IconRobot },
+    { href: `/recruitment/recordings`, label: "AI Recordings", icon: IconVideo },
     //Temporarily disabled for demo purposes
-    // { href: `${base}/recruitment/candidates`,  label: "Candidates",       icon: Users },
-    { href: `/recruitment/candidates`,  label: "Candidates",       icon: Users },
-    { href: `/recruitment/ai-review`,  label: "AI Assessment",       icon: IconRobot },
-    { href: `/recruitment/recordings`,  label: "AI Recordings",       icon: IconVideo },
+// { href: `${base}/recruitment/candidates`,  label: "Candidates",       icon: Users },
+    { href: `/recruitment/candidates`, label: "Candidates", icon: Users },
   ];
   return (
     <div className="space-y-6 ">
