@@ -140,9 +140,9 @@ export default function AIReviewPage() {
                       <Button>+ Add Candidate</Button>
                     </div>
                   </div>
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 gap-6">
             {/* Left Column: Uploader + Assessment */}
-            <div className="col-span-2 space-y-6">
+            <div className="col-span-1 space-y-6">
               <ResumeUploader
                 onAnalyze={handleAnalyze}
                 loading={loading}
