@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Upload as IconUpload, File as IconFile, X as IconX } from "lucide-react";
+import { Upload as IconUpload, File as IconFile, X as IconX, Image as IconImage } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ResumeUploaderProps {
@@ -20,6 +20,16 @@ interface ResumeUploaderProps {
   progress: number;
 }
 
+const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB
+const ACCEPTED_FILE_TYPES = {
+  'application/pdf': ['.pdf'],
+  'application/msword': ['.doc'],
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+  'image/jpeg': ['.jpg', '.jpeg'],
+  'image/png': ['.png'],
+  'image/webp': ['.webp']
+};
+
 export const ResumeUploader: FC<ResumeUploaderProps> = ({
   onAnalyze,
   loading,
@@ -27,10 +37,35 @@ export const ResumeUploader: FC<ResumeUploaderProps> = ({
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const validateFile = (file: File): boolean => {
+    setError(null);
+    
+    // Check file size
+    if (file.size > MAX_FILE_SIZE) {
+      setError(`File size exceeds ${MAX_FILE_SIZE / (1024 * 1024)}MB limit`);
+      return false;
+    }
+
+    // Check file type
+    const fileType = file.type;
+    if (!Object.keys(ACCEPTED_FILE_TYPES).includes(fileType)) {
+      setError('Unsupported file type. Please upload a PDF, DOC, DOCX, or image file.');
+      return false;
+    }
+
+    return true;
+  };
 
   const handleFileChange = () => {
     const file = fileInputRef.current?.files?.[0] ?? null;
-    setSelectedFile(file);
+    if (file && validateFile(file)) {
+      setSelectedFile(file);
+    } else {
+      setSelectedFile(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   };
 
   const handleAnalyzeClick = () => {
@@ -41,7 +76,15 @@ export const ResumeUploader: FC<ResumeUploaderProps> = ({
   const clearSelection = (e: React.MouseEvent) => {
     e.stopPropagation();
     setSelectedFile(null);
+    setError(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const getFileIcon = (file: File) => {
+    if (file.type.startsWith('image/')) {
+      return <IconImage className="h-6 w-6" />;
+    }
+    return <IconFile className="h-6 w-6" />;
   };
 
   return (
@@ -49,7 +92,7 @@ export const ResumeUploader: FC<ResumeUploaderProps> = ({
       <CardHeader>
         <CardTitle>Upload Applicant Resume</CardTitle>
         <CardDescription>
-          Supported formats: <code>.pdf</code>, <code>.doc</code>, <code>.docx</code>
+          Supported formats: <code>.pdf</code>, <code>.doc</code>, <code>.docx</code>, <code>.jpg</code>, <code>.png</code>, <code>.webp</code>
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -62,7 +105,7 @@ export const ResumeUploader: FC<ResumeUploaderProps> = ({
         >
           {selectedFile ? (
             <div className="flex items-center justify-center space-x-2">
-              <IconFile className="h-6 w-6" />
+              {getFileIcon(selectedFile)}
               <span className="font-medium">{selectedFile.name}</span>
               <Button
                 variant="ghost"
@@ -84,12 +127,16 @@ export const ResumeUploader: FC<ResumeUploaderProps> = ({
           <input
             ref={fileInputRef}
             type="file"
-            accept=".pdf,.doc,.docx"
+            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"
             className="hidden"
             onChange={handleFileChange}
             disabled={loading}
           />
         </div>
+
+        {error && (
+          <p className="text-sm text-red-500">{error}</p>
+        )}
 
         <Button
           onClick={handleAnalyzeClick}

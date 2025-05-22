@@ -1,178 +1,40 @@
 // src/app/ai-review/page.tsx
 "use client";
 
-import { useState, FC } from "react";
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
-import { SiteHeader } from "@/components/site-header";
-import {
-  Table,
-  TableHeader,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-} from "@/components/ui/table";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Clock } from "lucide-react";
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
-} from "@/components/ui/sheet";
-import { RecordingPlayerPanel } from "@/components/AIReview/RecordingPlayerPanel";
+import { ResumeUploader } from '@/components/AIReview/ResumeUploader';
+import { ResumeAnalysis } from '@/components/AIReview/ResumeAnalysis';
+import { useResumeAnalysis } from '@/hooks/useResumeAnalysis';
 
-interface InterviewApplicant {
-  id: string;
-  name: string;
-  avatar: string;
-  email: string;
-  age: number;
-  gender: "M" | "F";
-  position: string;
-  match: number;       // % fit from AI
-  interviewDate: string;
-  recordingUrl: string;
-}
-
-const applicants: InterviewApplicant[] = [
-  {
-    id: "a1",
-    name: "Sonia Hoppe",
-    avatar: "/avatars/sonia.jpg",
-    email: "sonia.hoppe@example.com",
-    age: 29,
-    gender: "F",
-    position: "UI/UX Designer",
-    match: 92,
-    interviewDate: "Apr 28, 2025",
-    recordingUrl: "/recordings/sonia.mp4",
-  },
-  {
-    id: "a2",
-    name: "Melissa Bartoletti",
-    avatar: "/avatars/melissa.jpg",
-    email: "melissa.b@example.com",
-    age: 31,
-    gender: "F",
-    position: "Frontend Engineer",
-    match: 88,
-    interviewDate: "Apr 27, 2025",
-    recordingUrl: "/recordings/melissa.mp4",
-  },
-  {
-    id: "a3",
-    name: "Gina Steuber",
-    avatar: "/avatars/gina.jpg",
-    email: "gina.s@example.com",
-    age: 27,
-    gender: "F",
-    position: "Product Manager",
-    match: 85,
-    interviewDate: "Apr 26, 2025",
-    recordingUrl: "/recordings/gina.mp4",
-  },
-  // …add more as needed…
-];
-
-const InterviewQueuePage: FC = () => {
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<InterviewApplicant | null>(null);
+export default function AIReviewPage() {
+  const { analyzeResume, loading, progress, result, error } = useResumeAnalysis();
 
   return (
-    <SidebarProvider>
-         
-    <AppSidebar variant="inset" />
-    
-    <SidebarInset>
-   
-      <SiteHeader />
+    <div className="container mx-auto py-8 space-y-6">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold mb-2">AI Resume Review</h1>
+        <p className="text-muted-foreground mb-6">
+          Upload a resume to get an AI-powered analysis of the candidate&apos;s qualifications,
+          skills, and experience.
+        </p>
 
-        <div className="p-6 bg-muted rounded-lg shadow-sm">
-          <h2 className="text-2xl font-semibold mb-4">Interview Recordings</h2>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[40px]">#</TableHead>
-                <TableHead>Applicant</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Age</TableHead>
-                <TableHead>Gender</TableHead>
-                <TableHead>Position</TableHead>
-                <TableHead>Match</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead className="text-right">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {applicants.map((app, idx) => (
-                <TableRow key={app.id} className={idx === 0 ? "bg-primary/10" : ""}>
-                  <TableCell className="font-medium">{idx + 1}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={app.avatar} alt={app.name} />
-                        <AvatarFallback>{app.name[0]}</AvatarFallback>
-                      </Avatar>
-                      <span>{app.name}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>{app.email}</TableCell>
-                  <TableCell>{app.age}</TableCell>
-                  <TableCell>{app.gender}</TableCell>
-                  <TableCell>{app.position}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline">{app.match}%</Badge>
-                  </TableCell>
-                  <TableCell className="flex items-center gap-1 text-sm text-muted-foreground">
-                    <Clock className="h-4 w-4" />
-                    {app.interviewDate}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Sheet open={open} onOpenChange={setOpen}>
-                      <SheetTrigger asChild>
-                        <Button
-                          variant="link"
-                          size="sm"
-                          onClick={() => {
-                            setSelected(app);
-                            setOpen(true);
-                          }}
-                        >
-                          View Recording
-                        </Button>
-                      </SheetTrigger>
-                      <SheetContent side="right" className="w-full max-w-2xl">
-                        <SheetHeader>
-                          <SheetTitle>
-                            {selected?.name} — {selected?.position} Interview
-                          </SheetTitle>
-                        </SheetHeader>
-                        <RecordingPlayerPanel
-                          src={selected?.recordingUrl || ""}
-                          title={`${selected?.name} Interview`}
-                        />
-                        <SheetFooter>
-                          <Button variant="outline" onClick={() => setOpen(false)}>
-                            Close
-                          </Button>
-                        </SheetFooter>
-                      </SheetContent>
-                    </Sheet>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+        <ResumeUploader
+          onAnalyze={analyzeResume}
+          loading={loading}
+          progress={progress}
+        />
+
+        {error && (
+          <div className="mt-4 p-4 bg-destructive/10 text-destructive rounded-md">
+            {error}
+          </div>
+        )}
+
+        <ResumeAnalysis
+          result={result}
+          loading={loading}
+          progress={progress}
+        />
+      </div>
+    </div>
   );
-};
-
-export default InterviewQueuePage;
+}

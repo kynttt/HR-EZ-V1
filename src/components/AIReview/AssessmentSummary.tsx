@@ -2,22 +2,11 @@
 "use client";
 
 import { FC } from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import {
-  CheckCircle2,
-  AlertTriangle,
-  ThumbsUp,
-  ThumbsDown,
-  Search,
-} from "lucide-react";
+import type { AnalysisResult } from "@/hooks/useResumeAnalysis";
 
 interface AssessmentSummaryProps {
   match: number;
@@ -26,6 +15,7 @@ interface AssessmentSummaryProps {
   pros: string[];
   cons: string[];
   recommendedSkills: string[];
+  summary: AnalysisResult;
 }
 
 export const AssessmentSummary: FC<AssessmentSummaryProps> = ({
@@ -35,124 +25,178 @@ export const AssessmentSummary: FC<AssessmentSummaryProps> = ({
   pros,
   cons,
   recommendedSkills,
+  summary,
 }) => {
   return (
-    <Card className="shadow-lg">
-      <CardHeader>
-        <CardTitle>Assessment Summary</CardTitle>
-        <CardDescription>
-          High-level overview of candidate vs. role requirements
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent className="space-y-6">
-        {/* Overall Match */}
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-semibold">Overall Match</span>
-          <Badge variant="outline" className="text-xl">
-            {match}%
-          </Badge>
-        </div>
-
-        <Separator />
-
-        {/* Strengths & Weaknesses */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <section>
-            <div className="flex items-center space-x-2 text-green-600 mb-2">
-              <CheckCircle2 className="h-5 w-5" />
-              <span className="font-medium">Strengths</span>
+    <div className="space-y-6">
+      {/* Match Score */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Overall Match</CardTitle>
+          <CardDescription>Candidate's match score for the position</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">Match Score</span>
+              <Badge variant="outline" className="text-lg">
+                {match}%
+              </Badge>
             </div>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              {strengths.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section>
-            <div className="flex items-center space-x-2 text-yellow-600 mb-2">
-              <AlertTriangle className="h-5 w-5" />
-              <span className="font-medium">Weaknesses</span>
-            </div>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              {weaknesses.map((w) => (
-                <li key={w}>{w}</li>
-              ))}
-            </ul>
-          </section>
-        </div>
-
-        {/* Pros & Cons */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <section>
-            <div className="flex items-center space-x-2 text-blue-600 mb-2">
-              <ThumbsUp className="h-5 w-5" />
-              <span className="font-medium">Pros</span>
-            </div>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              {pros.map((p) => (
-                <li key={p}>{p}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section>
-            <div className="flex items-center space-x-2 text-red-600 mb-2">
-              <ThumbsDown className="h-5 w-5" />
-              <span className="font-medium">Cons</span>
-            </div>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              {cons.map((c) => (
-                <li key={c}>{c}</li>
-              ))}
-            </ul>
-          </section>
-        </div>
-
-        <Separator />
-
-        {/* Recommended Skills */}
-        <section>
-          <div className="flex items-center space-x-2 text-gray-700 mb-2">
-            <Search className="h-5 w-5" />
-            <span className="font-medium">Fit-for-Role Skills</span>
+            <Progress value={match} max={100} className="h-2" />
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Strengths & Weaknesses */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Strengths</CardTitle>
+            <CardDescription>Key areas of expertise</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-disc list-inside space-y-2">
+              {strengths.map((strength, index) => (
+                <li key={index} className="text-sm text-muted-foreground">
+                  {strength}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Areas for Improvement</CardTitle>
+            <CardDescription>Skills that need development</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-disc list-inside space-y-2">
+              {weaknesses.map((weakness, index) => (
+                <li key={index} className="text-sm text-muted-foreground">
+                  {weakness}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Pros & Cons */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Pros</CardTitle>
+            <CardDescription>Positive aspects of the candidate</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-disc list-inside space-y-2">
+              {pros.map((pro, index) => (
+                <li key={index} className="text-sm text-muted-foreground">
+                  {pro}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Cons</CardTitle>
+            <CardDescription>Areas of concern</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-disc list-inside space-y-2">
+              {cons.map((con, index) => (
+                <li key={index} className="text-sm text-muted-foreground">
+                  {con}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recommended Skills */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Recommended Skills</CardTitle>
+          <CardDescription>Skills to focus on for improvement</CardDescription>
+        </CardHeader>
+        <CardContent>
           <div className="flex flex-wrap gap-2">
-            {recommendedSkills.map((skill) => (
-              <Badge key={skill} variant="secondary">
+            {recommendedSkills.map((skill, index) => (
+              <Badge key={index} variant="secondary">
                 {skill}
               </Badge>
             ))}
           </div>
-        </section>
+        </CardContent>
+      </Card>
 
-        <Separator />
+      {/* AI Assessment */}
+      {summary.assessment && (
+        <Card>
+          <CardHeader>
+            <CardTitle>AI Assessment</CardTitle>
+            <CardDescription>Detailed analysis and recommendations</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Opening */}
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Overview</h3>
+              <p className="text-sm text-muted-foreground">
+                {summary.assessment.Opening}
+              </p>
+            </div>
 
-        {/* AI Analysis & Suggestions */}
-        <section className="space-y-4 text-sm text-muted-foreground">
-          <p>
-            The candidate demonstrates a strong technical foundation—particularly
-            in front-end frameworks and team collaboration. Their communication
-            skills and problem-solving approach align well with our agile
-            workflow. However, their limited back-end exposure suggests they
-            would benefit from mentorship on server-side technologies and CI/CD
-            practices.
-          </p>
-          <p>
-            We recommend leveraging their existing strengths: task them with
-            component design and user-experience improvements early on. Simultaneously,
-            provide guided training on Node.js and cloud fundamentals to round
-            out their skill set.
-          </p>
-          <p>
-            Overall, this profile is a high-potential match. A structured
-            onboarding plan focusing on back-end pairing, plus a microservice
-            workshop, will accelerate their contribution to cross-functional
-            teams.
-          </p>
-        </section>
-      </CardContent>
-    </Card>
+            <Separator />
+
+            {/* Main Assessment */}
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Assessment</h3>
+              <p className="text-sm text-muted-foreground">
+                {summary.assessment['Main Assessment']}
+              </p>
+            </div>
+
+            <Separator />
+
+            {/* Recommendations */}
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Recommendations</h3>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium text-blue-600">Onboarding Plan</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {summary.assessment.Recommendations['Onboarding plan']}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-blue-600">Training</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {summary.assessment.Recommendations.Training}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-blue-600">Early Wins</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {summary.assessment.Recommendations['Early wins']}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-blue-600">Longer-term Development</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {summary.assessment.Recommendations['Longer-term development']}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   );
 };
+
